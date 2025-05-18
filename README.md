@@ -30,7 +30,7 @@ Se usa SQLite como base de datos local para pruebas.
 Los modelos están definidos con SQLAlchemy ORM.
 
 ## Demo en vivo
-![Demo](https://drive.google.com/file/d/1wutWfpFZfwDuQs_VUJcGigKxJh75Ym2y/view?usp=sharing)
+[Demo](https://drive.google.com/file/d/1wutWfpFZfwDuQs_VUJcGigKxJh75Ym2y/view?usp=sharing)
 
 ## 🛠️ Configuración del entorno y ejecución del servidor back-end
 
