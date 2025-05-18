@@ -17,8 +17,6 @@ Editar
 
 
 # 🛠️ Configuración del entorno y ejecución del servidor
-Sigue estos pasos para levantar el entorno virtual e iniciar el backend con FastAPI:
-
 ### 1. Elimina el entorno virtual anterior (si existe)
 ```
 rm -rf .venv

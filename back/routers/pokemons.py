@@ -5,13 +5,12 @@ from schemas.pokemon import PokemonBase
 from utils.pokemonAPI import obtener_info_pokemon
 import docs.responses as responses
 
-
 router = APIRouter()
 
 @router.get(
     "/getPokemonsByRegion/{region}",
     summary="Obtener Pokémon según región",
-    responses=responses.get_by_region
+    responses=responses.get_by_region,
     )
 async def get_pokemons_by_region(
     region: str = Path(..., description="Nombre de la región: kanto, johto, hoenn, sinnoh, unova, kalos, alola, galar, paldea"),

@@ -256,3 +256,33 @@ auth = {
             }
         }
 }
+
+login = {
+        200: {
+            "description": "Inicio de sesión exitoso",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "access_token": "eyJhbGciOiJIUzI1NiIsInR...",
+                        "token_type": "bearer"
+                    }
+                }
+            }
+        },
+        400: {
+            "description": "Credenciales inválidas",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Credenciales inválidas"}
+                }
+            }
+        },
+        500: {
+            "description": "Error interno del servidor",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Error inesperado en el servidor"}
+                }
+            }
+        }
+    }
