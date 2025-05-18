@@ -1,43 +1,74 @@
-# poke-app
-Aplicación móvil en Flutter que consuma la API pública de Pokémon (https://pokeapi.co/) y también un backend propio para gestionar los datos de usuarios y sus Pokémon favoritos.
+# 🎮 Pokédex Mobile
 
-Explicar como lanzar el codigo (en visual studio code, con virtual environment)
-Mencionar que se usó la arquitectura BFF
-FastAPI porque es rapido, openAI usa fast api, Azure también lo usa por detrás.
-Es moderno, sencillo y la documentación con Swagger es muy sencilla de usar
+Este proyecto es una aplicación móvil con las funcionalidades:
 
-Levantar un virtual environment para salvaguardar versionesß
+- 🧾 Registrar usuarios y autenticarlos con JWT
+- ⭐ Guardar Pokémon favoritos por usuario
+- 🌍 Consultar Pokémon por región
 
-1. main.py ✅
-Solo orquesta e importa routers:
+## 🚀 Tecnologías Utilizadas
 
-python
-Copiar
-Editar
+| Capa         | Tecnología         | Descripción breve                                                             |
+|--------------|--------------------|-------------------------------------------------------------------------------|
+| Backend      | FastAPI            | Framework web moderno y rápido para construir APIs con Python.               |
+| Documentación| Swagger UI         | Generada automáticamente por FastAPI para probar y documentar endpoints.     |
+| Base de datos| SQLite             | Base de datos ligera usada para persistencia local durante el desarrollo.    |
+| ORM          | SQLAlchemy         | Mapeo objeto-relacional para interactuar con la base de datos desde Python.  |
+| Autenticación| JWT (JSON Web Token)| Método de autenticación basado en tokens para proteger rutas del backend.    |
+| Frontend| Fluter | Método de autenticación basado en tokens para proteger rutas del backend.    |
 
 
-# 🛠️ Configuración del entorno y ejecución del servidor
-### 1. Elimina el entorno virtual anterior (si existe)
+## 🧱 Arquitectura
+
+-----
+Para cada ruta, se utilizó la arquitectura Backend For Frontend.
+
+## 🔐 Autenticación
+Este backend usa JWT (JSON Web Tokens) para proteger los endpoints.
+Debes registrarte (/auth/register) y luego iniciar sesión (/auth/login) para obtener el token.
+
+## 🧪 Base de Datos
+Se usa SQLite como base de datos local para pruebas.
+Los modelos están definidos con SQLAlchemy ORM.
+
+
+## 🛠️ Configuración del entorno y ejecución del servidor back-end
+
+1. Clonar el repositorio
+```
+git clone https://github.com/vivz-dev/poke-app
+cd poke-app
+```
+
+2. Elimina el entorno virtual anterior (si existe)
 ```
 rm -rf .venv
 ```
 
-### 2. Crea un nuevo entorno virtual
+3. Crea un nuevo entorno virtual
 ```
 python3 -m venv .venv
 ```
 
-### 3. Activa el entorno virtual
+4. Activa el entorno virtual
 ```
 source .venv/bin/activate
 ```
 
-### 4. Actualiza pip e instala dependencias
+5. Actualiza pip e instala dependencias
 ```
 pip install -r requirements.txt
 ```
 
-### 5. Inicia el servidor FastAPI (desde el directorio back)
+6. Inicia el servidor FastAPI (desde el directorio back)
 ```
 cd back && uvicorn main:app --reload
 ```
+
+7. Opcional: Leer documentación de rutas
+Una vez levantado el servidor backend, se puede leer la documentación de cada ruta disponible en:
+```
+http://127.0.0.1:8000/docs#/
+```
+
+![alt text](image.png)
