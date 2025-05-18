@@ -19,27 +19,27 @@ Editar
 # 🛠️ Configuración del entorno y ejecución del servidor
 Sigue estos pasos para levantar el entorno virtual e iniciar el backend con FastAPI:
 
-## 1. Elimina el entorno virtual anterior (si existe)
+### 1. Elimina el entorno virtual anterior (si existe)
 ```
 rm -rf .venv
 ```
 
-## 2. Crea un nuevo entorno virtual
+### 2. Crea un nuevo entorno virtual
 ```
 python3 -m venv .venv
 ```
 
-## 3. Activa el entorno virtual
+### 3. Activa el entorno virtual
 ```
 source .venv/bin/activate
 ```
 
-## 4. Actualiza pip e instala dependencias
+### 4. Actualiza pip e instala dependencias
 ```
 pip install -r requirements.txt
 ```
 
-## 5. Inicia el servidor FastAPI (desde el directorio back)
+### 5. Inicia el servidor FastAPI (desde el directorio back)
 ```
 cd back && uvicorn main:app --reload
 ```
