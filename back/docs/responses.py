@@ -211,3 +211,48 @@ evolucionar = {
             }
         }
     }
+
+auth = {
+    201: {
+            "description": "Usuario creado exitosamente",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "id": 1,
+                        "username": "usuario123",
+                        "email": "usuario@example.com"
+                    }
+                }
+            }
+        },
+        400: {
+            "description": "Usuario o email ya registrado",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Usuario o email ya registrado"
+                    }
+                }
+            }
+        },
+        409: {
+            "description": "Conflicto de integridad (duplicado)",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Conflicto al registrar el usuario (duplicado u otro error de integridad)"
+                    }
+                }
+            }
+        },
+        500: {
+            "description": "Error interno del servidor",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Error inesperado al registrar el usuario"
+                    }
+                }
+            }
+        }
+}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Path, Query
 import httpx
 import math
-from models.pokemon import PokemonBase
+from schemas.pokemon import PokemonBase
 from utils.pokemonAPI import obtener_info_pokemon
 import docs.responses as responses
 
