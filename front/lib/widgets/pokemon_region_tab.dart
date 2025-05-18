@@ -26,6 +26,7 @@ class PokemonRegionTab extends StatefulWidget {
 
 class _PokemonRegionTabState extends State<PokemonRegionTab> {
   final ScrollController _scrollController = ScrollController();
+  final Map<int, List<Map<String, dynamic>>> _evolutionCache = {};
 
   List<Pokemon> _pokemones = [];
   int _offset = 0;
@@ -53,6 +54,28 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
       }
     });
   }
+
+  Future<List<Map<String, dynamic>>> _getEvolutionChain(int id) async {
+    if (_evolutionCache.containsKey(id)) {
+      return _evolutionCache[id]!;
+    }
+
+    try {
+      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/pokemons/getPokemon/$id'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final chain = List<Map<String, dynamic>>.from(data['cadena_evolutiva']);
+        _evolutionCache[id] = chain;
+        return chain;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
 
   Future<void> _fetchPokemons() async {
     setState(() {
@@ -118,19 +141,26 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
         return Column(
           children: [
             Expanded(
-              child: GridView.builder(
+              child: ListView.builder(
                 controller: _scrollController,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 itemCount: _pokemones.length + (_hasMore ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index < _pokemones.length) {
-                    return PokemonCard(pokemon: _pokemones[index]);
+                    final pokemon = _pokemones[index];
+                    return FutureBuilder<List<Map<String, dynamic>>>(
+                      future: _getEvolutionChain(pokemon.id),
+                      builder: (context, snapshot) {
+                        final cadenaEvolutiva = snapshot.data ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: PokemonCard(
+                            pokemon: pokemon,
+                            cadenaEvolutiva: cadenaEvolutiva,
+                          ),
+                        );
+                      },
+                    );
                   } else {
                     return const Center(
                       child: Padding(
@@ -142,6 +172,7 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
                 },
               ),
             ),
+
           ],
         );
       },
