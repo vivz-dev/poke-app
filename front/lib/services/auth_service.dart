@@ -2,15 +2,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/auth_result.dart';
+import '../config.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://localhost:8000/auth';
+  // static const String baseUrl = 'http://localhost:8000/auth';
 
   /// Registra un usuario y lo autentica automáticamente
   static Future<AuthResult> registerAndLogin(String username, String password) async {
     try {
       final registerRes = await http.post(
-        Uri.parse('$baseUrl/register'),
+        Uri.parse('${AppConfig.baseUrl}/auth/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
@@ -41,7 +42,7 @@ class AuthService {
   static Future<AuthResult> loginUser(String username, String password) async {
     try {
       final loginRes = await http.post(
-        Uri.parse('$baseUrl/login'),
+        Uri.parse('${AppConfig.baseUrl}/auth/login'),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: {
           'username': username,
@@ -66,7 +67,7 @@ class AuthService {
 
       return AuthResult(success: false, message: 'Credenciales inválidas');
     } catch (e) {
-      return AuthResult(success: false, message: 'Error de red o del servidor');
+      return AuthResult(success: false, message: 'Error de red o del servidor${e}');
     }
   }
 
