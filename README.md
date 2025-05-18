@@ -25,7 +25,6 @@ Para cada ruta, se utilizó la arquitectura Backend For Frontend.
 
 ## 🔐 Autenticación
 Este backend usa JWT (JSON Web Tokens) para proteger los endpoints.
-Debes registrarte (/auth/register) y luego iniciar sesión (/auth/login) para obtener el token.
 
 ## 🧪 Base de Datos
 Se usa SQLite como base de datos local para pruebas.
@@ -71,4 +70,4 @@ Una vez levantado el servidor backend, se puede leer la documentación de cada r
 http://127.0.0.1:8000/docs#/
 ```
 
-![alt text](image.png)
+![Documentación](images/image.png)
