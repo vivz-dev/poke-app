@@ -1,0 +1,26 @@
+# Entorno virtual
+.venv/
+venv/
+/venv/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+
+# Archivos temporales de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de texto o prueba (si no quieres versionar)
+a.txt
+
+# Archivos de configuración del editor
+.vscode/
+*.code-workspace
+
+# Archivos de logs
+*.log
+
+# Archivos de backup
+*.bak
+*.swp
