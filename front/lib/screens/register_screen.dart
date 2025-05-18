@@ -11,7 +11,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   String _username = '';
   String _password = '';
-  String? _email;
 
   bool _loading = false;
 
@@ -19,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _loading = true);
-    AuthResult result = await AuthService.registerAndLogin(_username, _password, _email);
+    AuthResult result = await AuthService.registerAndLogin(_username, _password);
     setState(() => _loading = false);
 
     if (result.success) {
@@ -56,10 +55,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: true,
                     onChanged: (value) => _password = value,
                     validator: (value) => value!.isEmpty ? 'Ingresa tu contraseña' : null,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Email'),
-                    onChanged: (value) => _email = value.isEmpty ? null : value,
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(

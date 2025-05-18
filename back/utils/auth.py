@@ -9,17 +9,6 @@ from models.user import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# {
-#   "username": "vivi",
-#   "email": "vivi@example.com",
-#   "password": "123"
-# {
-#   "id": 3,
-#   "username": "vivi",
-#   "email": "vivi@example.com"
-# }
-# }
-
 # Configuración de JWT
 SECRET_KEY = "pokemon_es_lo_maximo" 
 ALGORITHM = "HS256"

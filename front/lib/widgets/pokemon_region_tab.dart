@@ -12,15 +12,20 @@ class PokemonRegionTab extends StatefulWidget {
 
   @override
   State<PokemonRegionTab> createState() => _PokemonRegionTabState();
+
+  static void clearCache() {
+    _cache.clear();
+    _offsets.clear();
+    _hasMoreFlags.clear();
+  }
+
+  static final Map<String, List<Pokemon>> _cache = {};
+  static final Map<String, int> _offsets = {};
+  static final Map<String, bool> _hasMoreFlags = {};
 }
 
 class _PokemonRegionTabState extends State<PokemonRegionTab> {
   final ScrollController _scrollController = ScrollController();
-
-  // 🔁 Cache local por región
-  static final Map<String, List<Pokemon>> _cache = {};
-  static final Map<String, int> _offsets = {};
-  static final Map<String, bool> _hasMoreFlags = {};
 
   List<Pokemon> _pokemones = [];
   int _offset = 0;
@@ -31,11 +36,10 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
   void initState() {
     super.initState();
 
-    // Si ya hay cache, usarlo
-    if (_cache.containsKey(widget.region)) {
-      _pokemones = _cache[widget.region]!;
-      _offset = _offsets[widget.region] ?? 0;
-      _hasMore = _hasMoreFlags[widget.region] ?? true;
+    if (PokemonRegionTab._cache.containsKey(widget.region)) {
+      _pokemones = PokemonRegionTab._cache[widget.region]!;
+      _offset = PokemonRegionTab._offsets[widget.region] ?? 0;
+      _hasMore = PokemonRegionTab._hasMoreFlags[widget.region] ?? true;
     } else {
       _fetchPokemons();
     }
@@ -73,10 +77,9 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
           _offset = data['offset_siguiente'] ?? _offset;
           _hasMore = data['existe_siguiente'] ?? false;
 
-          // 🔁 Actualiza cache
-          _cache[widget.region] = _pokemones;
-          _offsets[widget.region] = _offset;
-          _hasMoreFlags[widget.region] = _hasMore;
+          PokemonRegionTab._cache[widget.region] = _pokemones;
+          PokemonRegionTab._offsets[widget.region] = _offset;
+          PokemonRegionTab._hasMoreFlags[widget.region] = _hasMore;
         });
       } else {
         throw Exception('Error al cargar datos: ${response.statusCode}');
@@ -105,22 +108,35 @@ class _PokemonRegionTabState extends State<PokemonRegionTab> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
+        if (_pokemones.isEmpty && _isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        int crossAxisCount = (constraints.maxWidth / 300).floor();
+        crossAxisCount = crossAxisCount < 1 ? 1 : crossAxisCount;
+
         return Column(
           children: [
             Expanded(
-              child: _pokemones.isEmpty && _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
+              child: GridView.builder(
                 controller: _scrollController,
+                padding:
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
                 itemCount: _pokemones.length + (_hasMore ? 1 : 0),
-                padding: const EdgeInsets.symmetric(horizontal: 8),
                 itemBuilder: (context, index) {
                   if (index < _pokemones.length) {
                     return PokemonCard(pokemon: _pokemones[index]);
                   } else {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(child: CircularProgressIndicator()),
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(12),
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   }
                 },

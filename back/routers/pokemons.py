@@ -20,6 +20,28 @@ async def get_pokemons_by_region(
     base_url = "https://pokeapi.co/api/v2"
     regiones_validas = {"kanto", "johto", "hoenn", "sinnoh", "unova", "kalos", "alola", "galar", "paldea"}
 
+    region_slug_map = {
+        "kanto": "kanto",
+        "johto": "original-johto",
+        "hoenn": "hoenn",
+        "sinnoh": "sinnoh",
+        "unova": "unova",
+        "kalos": "kalos-central",  # solo una parte, o puedes extender a coastal/mountain
+        "alola": "alola",
+        "galar": "galar",
+        "paldea": "paldea",
+    }
+
+    region = region.lower()
+    if region not in region_slug_map:
+        raise HTTPException(
+            status_code=400,
+            detail=f"La región '{region}' no es válida. Usa: {', '.join(region_slug_map.keys())}"
+        )
+
+    slug = region_slug_map[region]
+
+
     # Validar si es una región válida
     region = region.lower()
     if region not in regiones_validas:
@@ -31,34 +53,16 @@ async def get_pokemons_by_region(
     try:
         async with httpx.AsyncClient() as client:
             # Obtener lista de generaciones
-            res_gen = await client.get(f"{base_url}/generation/")
-            res_gen.raise_for_status()
-            generaciones = res_gen.json()["results"]
+            res_pokedex = await client.get(f"{base_url}/pokedex/{slug}")
+            res_pokedex.raise_for_status()
+            pokedex_data = res_pokedex.json()
 
-            # Buscar generación que tenga la región dada
-            region = region.lower()
-            url_generacion = None
-            for gen in generaciones:
-                detalle = await client.get(gen["url"])
-                detalle.raise_for_status()
-                gen_data = detalle.json()
-                if gen_data["main_region"]["name"] == region:
-                    url_generacion = gen["url"]
-                    break
+            entries = pokedex_data["pokemon_entries"]
+            total = len(entries)
 
-            if not url_generacion:
-                raise HTTPException(status_code=404, detail="Región no encontrada")
+            entries_paginadas = entries[offset:offset + limit]
+            nombres = [entry["pokemon_species"]["name"] for entry in entries_paginadas]
 
-            # Obtener especie de Pokémon en esa región
-            gen_data = (await client.get(url_generacion)).json()
-            especies = gen_data["pokemon_species"]
-            total = len(especies)
-
-            # paginacion
-            especies_paginadas = especies[offset:offset + limit]
-            nombres = [e["name"] for e in especies_paginadas]
-
-            # Obtener detalles de cada Pokémon en la página actual
             pokemones = []
             for nombre in nombres:
                 try:
@@ -180,7 +184,7 @@ async def evolucionar_pokemon(id: str = Path(..., description="ID o nombre del P
             if not siguiente:
                 return {
                     "evolucionado": False,
-                    "mensaje": "Este Pokémon ya está en su forma final"
+                    "mensaje": "Este Pokemon ya esta en su forma final"
                 }
 
             info_evolucion = await obtener_info_pokemon(siguiente, client)

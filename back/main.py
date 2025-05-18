@@ -10,6 +10,7 @@ from database import Base, engine
 import models.user
 from models.fav_pokemon import Favorite
 
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(

@@ -219,18 +219,17 @@ auth = {
                 "application/json": {
                     "example": {
                         "id": 1,
-                        "username": "usuario123",
-                        "email": "usuario@example.com"
+                        "username": "usuario123"
                     }
                 }
             }
         },
         400: {
-            "description": "Usuario o email ya registrado",
+            "description": "Usuario ya registrado",
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Usuario o email ya registrado"
+                        "detail": "Usuario ya registrado"
                     }
                 }
             }

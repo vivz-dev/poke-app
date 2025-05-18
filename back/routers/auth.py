@@ -22,20 +22,19 @@ def register_user(
     db: Session = Depends(get_db)
     ):
     try: 
-        # Verificar si el email o username ya existen
+        # Verificar si el username ya existen
         existing_user = db.query(User).filter(
-            (User.email == user.email) | (User.username == user.username)
+            (User.username == user.username)
         ).first()
         if existing_user:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Usuario o email ya registrado"
+                detail="Usuario ya registrado"
             )
 
         hashed_pw = hash_password(user.password)
         new_user = User(
             username=user.username,
-            email=user.email,
             hashed_password=hashed_pw
         )
         db.add(new_user)

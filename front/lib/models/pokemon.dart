@@ -25,4 +25,16 @@ class Pokemon {
       estadisticas: Map<String, dynamic>.from(json['estadisticas']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+      'imagen': imagen,
+      'tipos': tipos,
+      'habilidades': habilidades,
+      'estadisticas': estadisticas,
+    };
+  }
+
 }

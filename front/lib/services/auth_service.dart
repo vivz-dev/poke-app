@@ -7,15 +7,14 @@ class AuthService {
   static const String baseUrl = 'http://localhost:8000/auth';
 
   /// Registra un usuario y lo autentica automáticamente
-  static Future<AuthResult> registerAndLogin(String username, String password, String? email) async {
+  static Future<AuthResult> registerAndLogin(String username, String password) async {
     try {
       final registerRes = await http.post(
         Uri.parse('$baseUrl/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
-          'password': password,
-          if (email != null) 'email': email,
+          'password': password
         }),
       );
 

@@ -15,6 +15,7 @@ class FavoritesModal extends StatefulWidget {
 
 class _FavoritesModalState extends State<FavoritesModal> {
   late Future<List<Pokemon>> _favorites;
+  bool _huboCambios = false; // 🔁 Nueva bandera
 
   @override
   void initState() {
@@ -44,6 +45,17 @@ class _FavoritesModalState extends State<FavoritesModal> {
     }
   }
 
+  void _recargarFavoritos() {
+    setState(() {
+      _favorites = fetchFavorites();
+      _huboCambios = true; // ✅ Marcar que hubo un cambio
+    });
+  }
+
+  void _cerrarModal() {
+    Navigator.of(context).pop(_huboCambios); // ✅ Retornar si hubo cambios
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -66,7 +78,7 @@ class _FavoritesModalState extends State<FavoritesModal> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: _cerrarModal, // ✅ usar función personalizada
                   )
                 ],
               ),
@@ -114,7 +126,10 @@ class _FavoritesModalState extends State<FavoritesModal> {
                     padding: const EdgeInsets.all(8),
                     itemCount: favorites.length,
                     itemBuilder: (context, index) {
-                      return PokemonCard(pokemon: favorites[index]);
+                      return PokemonCard(
+                        pokemon: favorites[index],
+                        onRemovedFromFavorites: _recargarFavoritos, // sigue igual
+                      );
                     },
                   );
                 },

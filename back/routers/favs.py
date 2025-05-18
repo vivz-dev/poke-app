@@ -72,3 +72,28 @@ def add_favorito(
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error al guardar favorito: {str(e)}")
+    
+
+@router.delete(
+"/favs/{nombre}",
+summary="Eliminar Pokémon de favoritos por nombre",
+tags=["Favoritos"]
+)
+def delete_favorito(
+    nombre: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        favorito = db.query(Favorite).filter_by(user_id=user.id, nombre=nombre).first()
+
+        if not favorito:
+            raise HTTPException(status_code=404, detail="Este Pokémon no está en tus favoritos")
+
+        db.delete(favorito)
+        db.commit()
+        return {"msg": f"{nombre} eliminado de favoritos"}
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error al eliminar favorito: {str(e)}")
