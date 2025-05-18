@@ -30,7 +30,6 @@ Este backend usa JWT (JSON Web Tokens) para proteger los endpoints.
 Se usa SQLite como base de datos local para pruebas.
 Los modelos están definidos con SQLAlchemy ORM.
 
-
 ## 🛠️ Configuración del entorno y ejecución del servidor back-end
 
 1. Clonar el repositorio

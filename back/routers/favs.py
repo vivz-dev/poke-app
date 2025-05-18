@@ -22,10 +22,15 @@ def get_favoritos(
     ):
     try:
         favoritos = db.query(Favorite).filter(Favorite.user_id == user.id).all()
-        return {
-            "usuario": user.username,
-            "favoritos": [f.pokemon_name for f in favoritos] if favoritos else []
-        }
+        return [PokemonBase(
+            id=f.id,
+            nombre=f.nombre,
+            imagen=f.imagen,
+            tipos=f.tipos,
+            habilidades=f.habilidades,
+            estadisticas=f.estadisticas
+        ) for f in favoritos]
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener favoritos: {str(e)}")
     except NoResultFound:
