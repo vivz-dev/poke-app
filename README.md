@@ -19,9 +19,8 @@ Este proyecto es una aplicación móvil con las funcionalidades:
 
 
 ## 🧱 Arquitectura
-
------
-Para cada ruta, se utilizó la arquitectura Backend For Frontend.
+Para cada router, se utilizó la arquitectura Backend For Frontend.
+![Arquitectura](images/arch.png)
 
 ## 🔐 Autenticación
 Este backend usa JWT (JSON Web Tokens) para proteger los endpoints.
