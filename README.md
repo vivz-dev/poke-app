@@ -9,6 +9,9 @@ Este proyecto es una aplicación móvil con las funcionalidades:
 ## 🎥 Demo en vivo
 [Enlace al video](https://drive.google.com/file/d/1VQXpkZenN4ejvDXWGgCqX5ClVghHHPAR/view?usp=sharing)
 
+## Capturas de pantalla
+<img src="images/poke-capt2.png" width="250"><img src="images/poke-capt4.png" width="250"><img src="images/poke-capt.png" width="250">
+
 ## 🚀 Tecnologías Utilizadas
 
 | Capa         | Tecnología         | Descripción breve                                                             |
