@@ -6,6 +6,9 @@ Este proyecto es una aplicación móvil con las funcionalidades:
 - ⭐ Guardar Pokémon favoritos por usuario
 - 🌍 Consultar Pokémon por región
 
+## 🎥 Demo en vivo
+[Enlace al video](https://drive.google.com/file/d/1VQXpkZenN4ejvDXWGgCqX5ClVghHHPAR/view?usp=sharing)
+
 ## 🚀 Tecnologías Utilizadas
 
 | Capa         | Tecnología         | Descripción breve                                                             |
@@ -28,9 +31,6 @@ Este backend usa JWT (JSON Web Tokens) para proteger los endpoints.
 ## 🧪 Base de Datos
 Se usa SQLite como base de datos local para pruebas.
 Los modelos están definidos con SQLAlchemy ORM.
-
-## Demo en vivo
-[Enlace al video](https://drive.google.com/file/d/1VQXpkZenN4ejvDXWGgCqX5ClVghHHPAR/view?usp=sharing)
 
 ## 🛠️ Configuración del entorno y ejecución del servidor back-end
 
