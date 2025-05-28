@@ -75,3 +75,11 @@ http://127.0.0.1:8000/docs#/
 ```
 
 ![Documentación](images/image.png)
+
+
+## 👤 Contacto
+
+- vivianavera03@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/vivianavera03/)
+
+
